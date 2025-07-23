@@ -2,11 +2,8 @@ package org.example.kandopeldacalloutjavafx;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-
-//import static javax.xml.catalog.BaseEntry.CatalogEntryType.URI;
 
 public class GroqService {
     public static String getResponseJson(String question) throws IOException {
@@ -32,9 +29,9 @@ public class GroqService {
 
         URL url = new URL(endpoint);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/json");
-        con.setRequestProperty("Authorization", "Bearer " + groqApiKey);
+        con.setRequestMethod(method);
+        con.setRequestProperty(headerKey1, headerValue1);
+        con.setRequestProperty(headerKey2, headerValue2);
         con.setDoOutput(true);
 
         OutputStream os = con.getOutputStream();
@@ -43,7 +40,7 @@ public class GroqService {
 
         int code = con.getResponseCode();
         System.out.println("Response code: " + code);
-        // Read response from con.getInputStream() if needed
+        // Read response from con.getInputStream()
         InputStream responseInputStream = con.getInputStream();
         BufferedReader in = new BufferedReader(new InputStreamReader(responseInputStream));
         StringBuilder response = new StringBuilder();
