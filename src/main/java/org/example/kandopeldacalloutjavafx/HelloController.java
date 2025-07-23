@@ -7,6 +7,10 @@ import javafx.scene.control.TextArea;
 import java.io.IOException;
 
 public class HelloController {
+    public static boolean isRunningTest = false;
+
+    public final String testQuestion = "How to tie a tie?";
+
     @FXML public TextArea questionTextArea;
     @FXML public TextArea answerTextArea;
 
@@ -15,9 +19,9 @@ public class HelloController {
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
-        String question = questionTextArea.getText();
+        String question = isRunningTest ? testQuestion : questionTextArea.getText();
         String responseJson = GroqService.getResponseJson(question);
         String answer = GroqService.parseAnswer(responseJson);
-        answerTextArea.setText(answer);
+        if (!isRunningTest) answerTextArea.setText(answer);
     }
 }
