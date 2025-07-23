@@ -4,6 +4,7 @@ module org.example.kandopeldacalloutjavafx {
 
     requires org.kordamp.bootstrapfx.core;
     requires junit;
+    requires java.xml;
 
     opens org.example.kandopeldacalloutjavafx to javafx.fxml;
     exports org.example.kandopeldacalloutjavafx;
