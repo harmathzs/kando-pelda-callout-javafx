@@ -4,6 +4,10 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class GroqService {
     public static String getResponseJson(String question) throws IOException {
@@ -57,6 +61,19 @@ public class GroqService {
         return jsonString;
     }
     public static String parseAnswer(String responseJson) {
-        return "TODO";
+        String answer = "";
+
+        JSONObject obj = new JSONObject(responseJson);
+        JSONArray choices = obj.getJSONArray("choices");
+        for (Object choice: choices) {
+            JSONObject choiceObj = (JSONObject) choice;
+            JSONObject message = choiceObj.getJSONObject("message");
+            String role = message.getString("role");
+            if (Objects.equals(role, "assistant")) {
+                answer = message.getString("content");
+            }
+        }
+
+        return answer;
     }
 }
