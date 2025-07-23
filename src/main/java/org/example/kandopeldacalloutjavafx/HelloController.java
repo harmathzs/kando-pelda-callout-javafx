@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
+import java.io.IOException;
+
 public class HelloController {
     @FXML public TextArea questionTextArea;
     @FXML public TextArea answerTextArea;
@@ -12,9 +14,10 @@ public class HelloController {
     private Label welcomeText;
 
     @FXML
-    protected void onHelloButtonClick() {
+    protected void onHelloButtonClick() throws IOException {
         String question = questionTextArea.getText();
-        String answer = "TODO";
+        String responseJson = GroqService.getResponseJson(question);
+        String answer = GroqService.parseAnswer(responseJson);
         answerTextArea.setText(answer);
     }
 }
